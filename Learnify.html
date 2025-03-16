@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Learnify</title>
+<style>
+
+body {
+    font-family: sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    background-color: #A9B5DF;
+    padding-top: 60px; /* Prevents content from being hidden under the fixed header */
+}
+
+header {
+    background: #FFF2F2;
+    padding: 15px 30px;
+    width: 100%;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    height: 20px;
+    padding: 20px;
+  display: flex;    
+ justify-content: space-between;    
+  align-items: center;
+  font-size: small;
+    
+}
+
+.logo {
+    font-size: medium;
+    color: #A9B5DF;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+nav {
+    display: flex;
+    gap: 25px;
+    margin-left: auto; /* Pushes the nav to the right */
+    padding-right: 30px; /* Adds spacing from the right */
+}
+
+nav a {
+    text-decoration: none;
+    color: #A9B5DF;
+    font-weight: bold;
+    font-size: 13px;
+    transition: color 0.3s ease-in-out;
+    padding: 8px 15px;
+    border-radius: 5px;
+    white-space: nowrap; /* Prevents text from wrapping */
+    display: flex;
+    align-items: center; /* Vertically centers the text */
+    justify-content: center; /* Horizontally centers the text */
+}
+
+nav a:hover {
+    color: #007BFF;
+}
+
+.box-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    border: 2px solid #000;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.rectangle-container {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.image-rectangle, .test-button {
+    width: 200px;
+    height: 40px;
+    background-color: #FFF2F2;
+    border-radius: 10px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.2s;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+}
+
+.image-rectangle:hover, .test-button:hover {
+    transform: scale(1.05);
+}
+
+.image-rectangle img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+.info-box-container, .test-box-container {
+    width: 450px;
+    border: 1px solid #ccc;
+    padding: 20px;
+    border-radius: 10px;
+    margin-left: 20px;
+    display: none;
+    padding: 15px;
+    height: 437px; /* Fixed height */
+    overflow-y: auto; /* Enables vertical scrolling */
+    background-color: #FFF2F2;
+}
+
+.info-box-container.active, .test-box-container.active {
+    display: block;
+}
+
+.main-container {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.test-box-container {
+    width: 450px;
+    border: 1px solid #ccc;
+    padding: 20px;
+    border-radius: 10px;
+    margin-left: 20px;
+    display: none;
+    padding: 15px;
+    height: 437px; /* Fixed height */
+    overflow-y: auto; /* Enables vertical scrolling */
+}
+
+.test-box-container.active {
+    display: block;
+}
+
+.question {
+    margin-bottom: 15px;
+    padding: 10px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    text-align: left;
+}
+
+.question label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.options {
+    display: flex;
+    justify-content: space-around;
+    padding: 5px 0;
+}
+
+.options label {
+    cursor: pointer;
+}
+
+.submit-btn {
+    background: #4CAF50;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    width: 100%;
+    max-width: 200px;
+    margin-top: 10px;
+    display: block;
+    margin: 10px auto;
+}
+
+.submit-btn:hover {
+    background: #45a049;
+}
+
+#result {
+    margin-top: 15px;
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+    background: white;
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.info-box-container {
+    flex: 1;
+}
+
+.logo-container {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Adds space between the image and text */
+}
+
+.logo-img {
+    width: 40px; /* Adjust size as needed */
+    height: 40px;
+    object-fit: contain; /* Ensures the image fits well */
+}
+</style>
+</head>
+<body>
+
+    <header>
+        <div class="logo-container">
+            <img src="Logo.png" alt="Logo Image" class="logo-img">
+            <span class="logo">Learnify</span>
+        </div>
+        <nav>
+            <a href="about.html">ABOUT</a>
+
+        </nav>
+    </header>  
+
+    <div class="main-container">
+        <div class="box-container">
+            <div class="rectangle-container">
+                
+                <div class="image-rectangle" data-info="<h3>Visual/Spatial</h3> Spatial intelligence is the ability to visualize and manipulate objects in three-dimensional space. Individuals with this intelligence have a strong sense of direction, are adept at solving spatial problems like mazes and puzzles, and excel at activities like drawing, reading maps, and understanding architectural blueprints. They often think in terms of visual representations, using mental imagery to understand and process information. This ability allows them to perceive relationships between objects, imagine how things will look from different angles, and create mental models of complex structures.
+                    <br>
+                <h3>Tips:</h3>
+                <br>
+                Spatial intelligence, the ability to think in three dimensions, is a powerful tool for learning.  Those with this intelligence excel at visualizing, manipulating, and understanding spatial relationships. To improve your study skills and tap into this strength, focus on visualizing information.  Transform abstract concepts into mental pictures, use diagrams and mind maps, and create your own 3D models or use virtual reality tools to solidify your understanding.  Engage in activities that challenge your spatial reasoning, such as drawing, reading maps, solving mazes, and playing spatial puzzle games.  By actively engaging your spatial sense, you can create a stronger connection between your visualization and your understanding of the material.
+                 <br>
+                 <br>
+                Furthermore, leverage the visual nature of spatial intelligence to create a more engaging learning environment.  Use color-coding for notes, create visual timelines for historical events, and incorporate visual aids like graphs and charts into your study routine.  By incorporating these elements into your study approach, you can harness the power of spatial intelligence to enhance your memory, comprehension, and overall learning experience.<p></p>">
+                <img src="visual.jpg" alt="Image 2">
+
+            </div>
+
+            <div class="image-rectangle" data-info="<h3>Verbal/Linguistic</h3><p>Linguistic intelligence is the ability to understand and use language effectively. Individuals with this intelligence have a strong command of vocabulary, grammar, and syntax, allowing them to express themselves clearly and persuasively. They often enjoy reading, writing, and engaging in verbal communication, such as debates and discussions. 
+                <br> Their ability to manipulate language enables them to create compelling narratives, communicate complex ideas, and understand the nuances of different languages. 
+                <br>
+                <h3>Tips:</h3>
+                For those who excel in linguistic intelligence, the key to enhancing learning lies in actively engaging with language in diverse ways.  Beyond simply reading, delve into the intricacies of words by exploring their etymology, synonyms, and nuances of meaning.   Engage in lively discussions, debates, and presentations to strengthen your articulation and critical thinking skills.  Journaling, creative writing, and even composing poetry can foster a deeper understanding of language and its power to express complex ideas.
+                 <br>
+                 <br>
+                Furthermore, cultivate a love for reading.  Explore various genres, authors, and styles to expand your vocabulary and develop a sophisticated understanding of different perspectives.  Listen to audiobooks, podcasts, and lectures to enhance your auditory comprehension and absorb new information through spoken language.  By immersing yourself in the world of words, you can unlock the full potential of your linguistic talents and elevate your learning experience to new heights.</p>"> 
+                <img src="verbal.jpg" alt="Image 3">
+            </div>
+
+            <div class="image-rectangle" data-info="<h3>Musical/Rhythmic</h3><p>Musical intelligence is the ability to perceive, create, and understand music. Individuals with this intelligence have a keen ear for melody, rhythm, and harmony, and are often able to recognize and reproduce musical patterns. They may think in terms of musical structures, rhythms, and tones, and often find it easy to remember information through songs, rhymes, or musical patterns. Their sensitivity to sound allows them to appreciate the emotional impact of music and use it as a powerful tool for expression and communication.
+                <br>
+                <h3>Tips:</h3>
+                For individuals with a strong musical intelligence, learning can be greatly enhanced by tapping into the power of sound and rhythm.  Instead of solely relying on traditional study methods, consider incorporating music into your learning process.  Listen to music that stimulates your brain and helps you focus,  experiment with different genres and tempos to find what works best for you.  Create your own musical pieces or songs to represent concepts or ideas,  this can be a fun and engaging way to remember key information.  Use rhythm and melody to associate with specific facts or sequences,  think of it like creating a musical mnemonic device.
+                <br>
+                <br>
+                Furthermore,  explore the world of music theory and composition.  Understanding the structure of music,  the relationships between notes and chords,  can deepen your understanding of patterns and relationships in other subjects.  Music can also serve as a powerful tool for memory enhancement.  Create catchy tunes or rhymes to help you recall important facts or formulas,  this technique can be particularly effective for subjects that require memorization. Remember, music is a powerful tool for learning,  so embrace your musical intelligence and let it enhance your academic journey.
+            </p>">
+            <img src="musical.jpg" alt="Image 4">
+
+            </div>
+            
+            <div class="image-rectangle" data-info="<h3>Interpersonal/Solitary</h3><p> Interpersonal intelligence is the ability to understand and interact effectively with others. Individuals with this intelligence are skilled at recognizing and responding to social cues, navigating complex social dynamics, and building and maintaining strong relationships. They possess empathy, sensitivity, and the ability to communicate effectively, making them adept at resolving conflicts, collaborating with others, and understanding different perspectives. This intelligence enables them to build strong social connections and thrive in environments that involve teamwork and social interaction.
+                <br>
+                <h3>Tips:</h3>
+                <br>
+                Interpersonal intelligence thrives on connection and collaboration, making it a powerful asset for learning. To enhance your study skills with this intelligence, embrace opportunities to learn alongside others. Form study groups where you can actively discuss concepts, challenge each other's understanding, and teach each other in a collaborative environment. This dynamic exchange of ideas fosters deeper comprehension and helps you grasp different perspectives.  Beyond academics, cultivate meaningful relationships with mentors, tutors, and professors who can offer guidance and support.  Engage in discussions, ask questions, and seek feedback to expand your knowledge and refine your understanding.
+                <br>
+                <br>
+                Leveraging your interpersonal intelligence extends beyond structured learning environments. Participate in online forums, join study communities, or attend workshops and conferences to connect with like-minded individuals.  These interactions can expose you to new ideas, broaden your perspectives, and foster a sense of belonging within a learning community.  By embracing the power of connection and collaboration, you can unlock the full potential of your interpersonal intelligence and transform your learning journey into a rewarding and enriching experience.
+            </p>">
+                <img src="interpersonal.jpg" alt="Image 5">
+            </div>
+
+            <div class="image-rectangle" data-info="<h3>Intrapersonal/Social</h3><p>Intrapersonal intelligence is the ability to understand oneself deeply, including one's own emotions, motivations, and values. Individuals with this intelligence are self-aware, introspective, and capable of reflecting on their thoughts and feelings. They can effectively manage their emotions, set realistic goals, and understand their own strengths and weaknesses. This self-knowledge allows them to make informed decisions, build healthy relationships, and navigate life with greater clarity and purpose.
+                <br>
+                <h3>Tips:</h3>
+                <br>
+                Intrapersonal intelligence, the ability to understand and manage oneself, is a key factor in effective learning.  To improve your study habits through this lens, focus on self-awareness and emotional regulation.  Begin by reflecting on your learning style and preferences. What motivates you? What distracts you?  Identify your strengths and weaknesses, and set realistic goals based on your individual needs and capabilities.  Practice mindfulness techniques such as meditation or deep breathing to manage stress and anxiety, which can hinder focus and comprehension.
+                <br>
+                <br>
+                Additionally, develop a growth mindset that welcomes challenges and embraces mistakes as opportunities for learning.  Be kind to yourself, recognizing that learning is a process, not a destination.  When you encounter difficulties, reflect on the underlying emotions and address them constructively.  By understanding your own emotional landscape and developing self-compassion, you can create a more supportive and productive learning environment for yourself. 
+            </p>">
+                <img src="intrapersonal.jpg" alt="Image 6">
+            </div>
+
+            <div class="image-rectangle" data-info="<h3>Logical-Mathematical</h3><p>Logical-mathematical intelligence is the ability to reason, solve problems, and think systematically. Individuals with this intelligence excel at understanding patterns, recognizing relationships, and applying logic to solve problems. They are comfortable with numbers, enjoy working with data, and often gravitate towards subjects like math, science, and computer programming. Their analytical skills allow them to break down complex information, identify key variables, and develop logical solutions.
+                <br>
+                <h3>Tips:</h3>
+                <br>
+                For those with a strong logical-mathematical intelligence, the key to effective learning lies in embracing structure, analysis, and problem-solving.  Start by organizing information logically, using outlines, flowcharts, or concept maps.  Break down complex concepts into smaller, more manageable parts, and connect ideas through clear reasoning and logical connections.  Engage in activities that require logical thinking, such as solving puzzles, playing strategy games, or working on math problems.  Challenge yourself by analyzing data, drawing conclusions based on evidence, and formulating arguments supported by logical reasoning.
+                <br>
+                <br>
+                Furthermore, cultivate a curiosity for patterns and relationships.  Look for connections between different concepts and explore the underlying principles that drive them.  Don't be afraid to question assumptions and seek alternative perspectives.  Practice applying your logical-mathematical skills to real-world situations, such as analyzing financial data, solving engineering problems, or designing experiments. By embracing a structured and analytical approach to learning, you can leverage your logical-mathematical intelligence to achieve academic success and excel in fields that demand critical thinking and problem-solving abilities.
+            </p>">
+                <img src="logical.jpg" alt="Image 7">
+            </div>
+            
+            <div class="image-rectangle" data-info="<h3>Kinesthetic</h3><p>Kinesthetic intelligence is the ability to learn best through physical movement and hands-on experiences. Individuals with this intelligence excel at using their bodies to manipulate objects, demonstrating good coordination and a strong mind-body connection. They thrive in environments that allow them to actively engage with their surroundings, such as building models, participating in physical activities, or taking notes by hand. Their learning is enhanced through tactile experiences, where they can interact with materials and explore concepts through movement and experimentation.
+                <br>
+                <h3>Tips:</h3>
+                <br>
+                For those who learn best through movement and physical engagement, kinesthetic intelligence offers a unique path to academic success.  Instead of simply sitting and absorbing information, kinesthetic learners thrive when they actively participate in the learning process.  This means going beyond traditional methods like note-taking and lectures.  Embrace hands-on activities, experiments, and projects that allow you to interact with the material in a tangible way.  Try building models, acting out scenarios, or even moving around the room while reviewing notes.  This active engagement helps solidify concepts and fosters a deeper understanding.
+                <br>
+                <br>
+                Think of your body as a tool for learning.  If you're studying history, create a timeline with key events plotted on a map.  If you're learning about the human body, use a model or diagram you can physically touch and explore.  Engaging multiple senses through movement and physical interaction not only makes learning more enjoyable but also enhances memory retention and comprehension.  By embracing your kinesthetic intelligence, you can turn study sessions into dynamic experiences that unlock your full potential.
+                <br>
+            </p>">
+                <img src="kinesthetic.jpg" alt="Image 8">
+            </div>
+               
+                <!-- Test Button -->
+                <div class="test-button">Take Test</div>
+            </div>
+        </div>
+        
+        <div class="info-box-container"></div>
+        <div class="test-box-container" id="quiz-container"></div>
+    </div>
+    
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script>
+
+function adjustContainers() {
+    if (quizContainer.classList.contains("active") && infoBoxContainer.classList.contains("active")) {
+        // Both are active → Share space
+        quizContainer.style.width = "456px";
+        quizContainer.style.height = "437px";
+        infoBoxContainer.style.width = "50%";
+        infoBoxContainer.style.height = "437px";
+    } else if (quizContainer.classList.contains("active")) {
+        // Only test is active → Expand
+        quizContainer.style.width = "817px";
+        quizContainer.style.height = "437px";
+        infoBoxContainer.style.width = "0";
+        infoBoxContainer.style.height = "0";
+    } else if (infoBoxContainer.classList.contains("active")) {
+        // Only info box is active → Expand
+        infoBoxContainer.style.width = "600px";
+        infoBoxContainer.style.height = "437px";
+        quizContainer.style.width = "0";
+        quizContainer.style.height = "0";
+    } else {
+        // Neither is active → Reset
+        quizContainer.style.width = "450px";
+        quizContainer.style.height = "437px";
+        infoBoxContainer.style.width = "450px";
+        infoBoxContainer.style.height = "437px";
+    }
+}
+
+            document.querySelectorAll(".image-rectangle").forEach(imageRectangle => {
+    imageRectangle.addEventListener("click", () => {
+        if (infoBoxContainer.classList.contains("active") && infoBoxContainer.innerHTML === imageRectangle.dataset.info) {
+            // Close if clicking the same box
+            infoBoxContainer.classList.remove("active");
+            infoBoxContainer.innerHTML = "";
+        } else {
+            // Open and update the info box
+            infoBoxContainer.innerHTML = imageRectangle.dataset.info;
+            infoBoxContainer.classList.add("active");
+        }
+        adjustContainers(); // Adjust sizes based on active elements
+    });
+});
+
+
+            const questions = [                
+"Do you prefer to learn by watching videos or presentations?",
+                "Do you find it easier to remember information when it is presented in diagrams, charts, or mind maps?",
+                "Do you enjoy using flashcards or images to study?",
+                "Do you often visualize concepts or ideas in your mind?",
+                "Do you prefer to take notes by drawing pictures or diagrams?",
+                "Do you find it easier to remember directions if you have a map?",
+                "Do you enjoy using colors and highlighting when studying?",
+                "Do you prefer to read books with lots of pictures and illustrations?",
+                "Do you often daydream or visualize things?",
+                "Do you find it easier to learn a new skill by watching someone demonstrate it?",
+                "Do you prefer to learn by listening to lectures or audio recordings?",
+                "Do you find it easier to remember information when it is spoken aloud?",
+                "Do you enjoy discussing topics with others?",
+                "Do you often talk to yourself when you are trying to learn something new?",
+                "Do you prefer to study in a quiet environment with minimal distractions?",
+                "Do you find it helpful to read aloud when studying?",
+                "Do you enjoy listening to music while you study?",
+                "Do you prefer to receive feedback verbally?",
+                "Do you find it easier to remember things if you hear them repeated?",
+                "Do you enjoy attending lectures and seminars?",
+                "Do you prefer to learn by doing or experiencing things firsthand?",
+                "Do you enjoy hands-on activities and experiments?",
+                "Do you find it difficult to sit still for long periods?",
+                "Do you prefer to take breaks to move around while studying?",
+                "Do you learn best by physically practicing a skill?",
+                "Do you enjoy using manipulatives or other physical objects to learn?",
+                "Do you prefer to study by walking around or moving while you read?",
+                "Do you find it helpful to use role-playing or simulations to learn?",
+                "Do you enjoy taking breaks to stretch or exercise while studying?",
+                "Do you prefer to learn by building things or creating something?",
+                "Do you enjoy reading and writing?",
+                "Do you find it easy to express yourself in writing?",
+                "Do you prefer to take notes during lectures or meetings?",
+                "Do you enjoy writing stories, poems, or songs?",
+                "Do you find it helpful to create outlines or summaries of what you have learned?",
+                "Do you prefer to learn by reading textbooks or articles?",
+                "Do you enjoy participating in class discussions and debates?",
+                "Do you find it helpful to explain concepts to others?",
+                "Do you prefer to use a dictionary or thesaurus when you are unsure of a word?",
+                "Do you enjoy writing in a journal or diary?",
+                "Do you enjoy solving puzzles and riddles?",
+                "Do you prefer to learn by analyzing information and identifying patterns?",
+                "Do you enjoy using logic and reasoning to solve problems?",
+                "Do you prefer to learn by using numbers and mathematical concepts?",
+                "Do you enjoy conducting experiments and analyzing data?",
+                "Do you prefer to learn by creating systems and procedures?",
+                "Do you enjoy using technology to learn?",
+                "Do you prefer to learn by understanding the underlying principles of a concept?",
+                "Do you enjoy playing strategy games?",
+                "Do you prefer to learn by asking questions and seeking answers?",
+                "Do you prefer to learn in a group setting?",
+                "Do you enjoy collaborating with others on projects?",
+                "Do you find it helpful to discuss your learning with others?",
+                "Do you prefer to study with a group of friends?",
+                "Do you enjoy participating in team activities?",
+                "Do you find it helpful to have a study buddy?",
+                "Do you prefer to learn from a teacher or mentor?",
+                "Do you enjoy giving presentations or sharing your knowledge with others?",
+                "Do you find it helpful to join clubs or organizations related to your interests?",
+                "Do you prefer to learn in a social and interactive environment?",
+                "Do you prefer to study alone?",
+                "Do you find it difficult to concentrate in noisy environments?",
+                "Do you prefer to work independently on projects?",
+                "Do you find it difficult to ask for help?",
+                "Do you prefer to learn at your own pace?",
+                "Do you enjoy working on individual projects?",
+                "Do you find it difficult to work in groups?",
+                "Do you prefer to study in a quiet and private space?",
+                "Do you find it difficult to share your work with others?",
+                "Do you prefer to learn independently and at your own pace?"
+
+            ];
+        
+            const learningStyles = [
+                 "Visual", "Visual", "Visual", "Visual", "Visual", "Visual", "Visual", "Visual", "Visual", "Visual",
+                "Auditory", "Auditory", "Auditory", "Auditory", "Auditory", "Auditory", "Auditory", "Auditory", "Auditory", "Auditory",
+                "Kinesthetic", "Kinesthetic", "Kinesthetic", "Kinesthetic", "Kinesthetic", "Kinesthetic", "Kinesthetic", "Kinesthetic", "Kinesthetic", "Kinesthetic",
+                "Verbal", "Verbal", "Verbal", "Verbal", "Verbal", "Verbal", "Verbal", "Verbal", "Verbal", "Verbal",
+                "Logical", "Logical", "Logical", "Logical", "Logical", "Logical", "Logical", "Logical", "Logical", "Logical",
+                "Social", "Social", "Social", "Social", "Social", "Social", "Social", "Social", "Social", "Social",
+                "Solitary", "Solitary", "Solitary", "Solitary", "Solitary", "Solitary", "Solitary", "Solitary", "Solitary", "Solitary"
+            ]
+        
+            const quizContainer = document.getElementById("quiz-container");
+            const testButton = document.querySelector(".test-button");
+            const infoBoxContainer = document.querySelector(".info-box-container");
+        
+            testButton.addEventListener("click", () => {
+                quizContainer.classList.toggle("active");
+                adjustContainers(); // Call function to resize accordingly
+                quizContainer.innerHTML = "<h3>Test Questions</h3>";
+        
+                questions.forEach((question, index) => {
+                    const questionDiv = document.createElement("div");
+                    questionDiv.classList.add("question");
+        
+                    questionDiv.innerHTML = `
+                        <label>${question}</label>
+                        <label><input type="radio" name="question${index}" value="yes"> Yes</label>
+                        <label><input type="radio" name="question${index}" value="no"> No</label>
+                    `;
+                    quizContainer.appendChild(questionDiv);
+                });
+        
+                const submitButton = document.createElement("button");
+                submitButton.textContent = "Submit";
+                submitButton.classList.add("submit-btn");
+                submitButton.addEventListener("click", () => {
+                    const answers = questions.map((_, index) => {
+                        const selected = document.querySelector(`input[name="question${index}"]:checked`);
+                        return selected ? selected.value : null;
+                    });
+        
+                    const result = calculateResult(answers);
+                    quizContainer.innerHTML = ""; // Clear test questions
+                    displayResult(result);
+                });
+        
+                quizContainer.appendChild(submitButton);
+            });
+        
+            function calculateResult(answers) {
+                const styleCounts = { Visual: 0, Auditory: 0, Kinesthetic: 0, Verbal: 0, Logical: 0, Social: 0, Solitary: 0 };
+        
+                answers.forEach((answer, index) => {
+                    if (answer === "yes") {
+                        styleCounts[learningStyles[index]]++;
+                    }
+                });
+        
+                const totalQuestions = answers.filter(answer => answer === "yes").length;
+                const percentages = {};
+        
+                Object.keys(styleCounts).forEach(style => {
+                    percentages[style] = ((styleCounts[style] / totalQuestions) * 100).toFixed(2);
+                });
+        
+                // Convert percentages object to an array of [style, percentage] pairs
+                const sortedPercentages = Object.entries(percentages).sort((a, b) => b[1] - a[1]);
+        
+                return sortedPercentages;
+            }
+        
+            let chartInstance = null; // Store Chart.js instance
+    
+            function displayResult(result) {
+    let resultDiv = document.getElementById("result");
+    if (!resultDiv) {
+        resultDiv = document.createElement("div");
+        resultDiv.id = "result";
+        quizContainer.appendChild(resultDiv);
+    }
+
+    // Extract labels (learning styles) and data (percentages)
+    const labels = result.map(([style]) => style);
+    const data = result.map(([_, percentage]) => percentage);
+
+    // Identify the top 3 unique percentage values
+    const uniquePercentages = [...new Set(data)].sort((a, b) => b - a).slice(0, 3);
+
+    // Include all learning styles that have percentages in the top 3 ranks
+    const topStyles = result.filter(([_, percentage]) => uniquePercentages.includes(percentage));
+
+    // Colors for ranking highlights
+    const highlightColors = ["#FF5733", "#33FF57", "#3357FF", "#FF8C00", "#800080"];
+
+    // Display ranked top learning styles
+    let rankingText = `<h3 style="text-align: center;">RESULT:</h3>`;
+    
+    let rank = 1;
+    let previousPercentage = null;
+
+    topStyles.forEach(([style, percentage], index) => {
+        // If the percentage changes, update rank
+        if (percentage !== previousPercentage) {
+            rank = index + 1;
+        }
+        previousPercentage = percentage;
+
+        rankingText += `<p style="font-size: 18px; font-weight: bold; color: ${highlightColors[rank - 1] || "#000"}; text-align: center;">
+            #${rank}: ${style} - ${percentage}%
+        </p>`;
+    });
+
+    resultDiv.innerHTML = rankingText;
+    resultDiv.innerHTML += `<canvas id="resultChart"></canvas>`; // Add chart canvas
+
+    // Destroy previous chart instance if it exists
+    if (chartInstance) {
+        chartInstance.destroy();
+    }
+
+    // Generate the Pie Chart
+    const ctx = document.getElementById("resultChart").getContext("2d");
+    chartInstance = new Chart(ctx, {
+        type: "pie",
+        data: {
+            labels: labels,
+            datasets: [{
+                data: data,
+                backgroundColor: [
+                    "#FF6384", "#36A2EB", "#FFCE56", "#4CAF50", "#9966FF", "#FF9F40", "#8D6E63"
+                ],
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    position: "bottom",
+                }
+            }
+        }
+    });
+}
+    
+    </script>
+</html>
+<style>
+    .info-box-container {
+        flex: 1;
+    }
+</style>
